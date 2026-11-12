@@ -1,0 +1,119 @@
+/* ==========================================================================
+   Amiraa Designs – effects layer (v17)
+   Tilt, parallax, petals, tap sparkles, thread vines, WhatsApp button, photo viewer.
+   Every effect is decorative: switched off for "reduce motion", and paused when off-screen.
+   ========================================================================== */
+
+/* ── Gold shimmer across the hero title (solid-white fallback if clip-text is unsupported) ── */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  #hero .hero-title {
+    background: linear-gradient(100deg, #fff 30%, #f6dd9a 46%, #fff 62%);
+    background-size: 260% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent; text-shadow: none;
+    filter: drop-shadow(0 4px 14px rgba(0,0,0,.4));
+    animation: fadeUp 1.2s var(--ease) .65s forwards, titleShimmer 7s ease-in-out 2.2s infinite;
+  }
+}
+@keyframes titleShimmer { 0%, 100% { background-position: 110% 0; } 50% { background-position: -10% 0; } }
+
+.btn-primary::after, .btn-light::after {
+  content: ''; position: absolute; top: 0; left: -80%; width: 50%; height: 100%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.5), transparent);
+  transform: skewX(-20deg); animation: btnSheen 5s ease-in-out 2.5s infinite;
+}
+@keyframes btnSheen { 0% { left: -80%; } 35%, 100% { left: 140%; } }
+
+/* ── Parallax (GPU-only; values written by fx.js) ── */
+.hero-bg { scale: 1.12; translate: 0 var(--hy, 0px); }
+.collection-card .card-img, .blog-card-img img, .featured-img img {
+  scale: 1.1; translate: 0 var(--py, 0px);
+  transition: scale .8s var(--ease);
+}
+.collection-card:hover .card-img, .blog-card:hover .blog-card-img img, .featured-post:hover .featured-img img { scale: 1.16; }
+
+/* ── 3D tilt cards (mouse hover, or finger press on phones) ── */
+.tilt-shine {
+  position: absolute; inset: 0; z-index: 5; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.4), rgba(255,255,255,0) 55%);
+  mix-blend-mode: soft-light;
+}
+.tilting { will-change: transform; box-shadow: 0 22px 45px rgba(139,85,83,.3); }
+.tilting .tilt-shine { opacity: 1; }
+
+/* ── Tap / click sparkle burst (phones) ── */
+.burst {
+  position: fixed; left: 0; top: 0; z-index: 10001; pointer-events: none;
+  width: var(--sz, 12px); height: var(--sz, 12px); margin: calc(var(--sz, 12px) / -2) 0 0 calc(var(--sz, 12px) / -2);
+  background: var(--col, #d4af37);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  animation: burstFly .8s cubic-bezier(.2,.7,.3,1) forwards;
+}
+@keyframes burstFly {
+  0% { opacity: 1; transform: translate(var(--x), var(--y)) scale(.4) rotate(0); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(var(--x) + var(--tx)), calc(var(--y) + var(--ty))) scale(1.1) rotate(200deg); }
+}
+
+/* ── Thread vines (≥1500px, plain light sections only) ── */
+.vine-layer { position: absolute; top: 0; left: 0; width: 100%; height: 0; z-index: 2; pointer-events: none; }
+.side-vine {
+  position: absolute; display: none; width: 100px; pointer-events: none; opacity: .9;
+  background: url('../../images/vine.svg') center top / 100px auto repeat-y;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 120px, #000 calc(100% - 120px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 120px, #000 calc(100% - 120px), transparent 100%);
+}
+.side-vine.left { left: 14px; }
+.side-vine.right { right: 14px; transform: scaleX(-1); }
+@media (min-width: 1500px) { .side-vine { display: block; } }
+
+/* ── Floating petals ── */
+.petal {
+  position: absolute; top: -40px; z-index: 3; pointer-events: none; opacity: 0;
+  width: var(--ps, 16px); height: calc(var(--ps, 16px) * 1.35); border-radius: 0 100% 0 100%;
+  background: linear-gradient(135deg, rgba(255,226,220,.95), rgba(212,175,55,.7));
+  box-shadow: 0 0 8px rgba(255,220,180,.5); animation: petalFall linear infinite;
+}
+@keyframes petalFall {
+  0% { opacity: 0; transform: translate3d(0,0,0) rotate(0); }
+  8% { opacity: .95; }
+  25% { transform: translate3d(var(--w1, 30px), 26vh, 0) rotate(var(--r1, 120deg)); }
+  50% { transform: translate3d(calc(var(--sway, 60px) * -.6), 52vh, 0) rotate(280deg); }
+  75% { transform: translate3d(var(--w2, -30px), 80vh, 0) rotate(var(--r2, 420deg)); }
+  92% { opacity: .8; }
+  100% { opacity: 0; transform: translate3d(var(--sway, 60px), 108vh, 0) rotate(560deg); }
+}
+
+/* ── Floating WhatsApp button ── */
+.wa-float {
+  position: fixed; right: 18px; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 9990;
+  width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: #187A3E; color: #fff; text-decoration: none; box-shadow: 0 8px 22px rgba(0,0,0,.28);
+  transition: transform .25s, box-shadow .25s;
+}
+.wa-float:hover { transform: translateY(-3px) scale(1.06); box-shadow: 0 12px 28px rgba(0,0,0,.32); }
+.wa-float svg { width: 30px; height: 30px; }
+.wa-float::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #187A3E; animation: waPulse 3s ease-out infinite; }
+@keyframes waPulse { 0% { transform: scale(1); opacity: .6; } 100% { transform: scale(1.55); opacity: 0; } }
+.wa-float:focus-visible { outline: 3px solid #fff; box-shadow: 0 0 0 6px var(--wine-deep); }
+body.menu-lock .wa-float, body.no-scroll .wa-float { display: none; }
+
+/* ── Photo viewer ── */
+.lb { position: fixed; inset: 0; z-index: 10002; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(40,20,22,.9); opacity: 0; transition: opacity .25s; overscroll-behavior: contain; }
+.lb.open { opacity: 1; }
+.lb-box { max-width: min(92vw, 520px); max-height: 92vh; display: flex; flex-direction: column; align-items: center; gap: 14px; transform: scale(.95); transition: transform .3s var(--ease); }
+.lb.open .lb-box { transform: none; }
+.lb-box img { max-width: 100%; max-height: 70vh; object-fit: contain; background: var(--sand); border: 6px solid var(--cream); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.lb-cap { text-align: center; color: var(--cream); }
+.lb-cap strong { display: block; margin-bottom: .2rem; font-family: var(--font-display); font-weight: 500; font-size: 1.45rem; }
+.lb-cap span { display: block; margin-bottom: .9rem; font-size: .9rem; letter-spacing: .08em; opacity: .9; }
+.lb-cap a { display: inline-flex; align-items: center; min-height: 46px; padding: .7rem 1.7rem; border-radius: 100px; background: var(--gold-bright); color: #3b1f21; text-decoration: none; font-size: .8rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.lb-close { position: absolute; top: 10px; right: 14px; width: 48px; height: 48px; background: none; border: 0; color: var(--cream); font-size: 2.4rem; line-height: 1; cursor: pointer; border-radius: 50%; }
+.lb-close:hover { background: rgba(255,255,255,.12); }
+
+@media (prefers-reduced-motion: reduce) {
+  .petal, .burst, .wa-float::after, .btn-primary::after, .btn-light::after, .nav-btn-cta::before, .sparkle-container, .sparkle-dot { display: none !important; }
+  .collection-card, .blog-card { transform: none !important; }
+  .hero-bg, .collection-card .card-img, .blog-card-img img, .featured-img img { translate: none !important; scale: 1 !important; }
+  #hero .hero-title { animation: none !important; opacity: 1; }
+}

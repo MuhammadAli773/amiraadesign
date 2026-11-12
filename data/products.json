@@ -1,0 +1,60 @@
+{
+  "products": [
+    {
+      "title": "Royal Zardozi Lehenga",
+      "category": "bridal",
+      "image": "/images/bridal_luxury_blog_1777094747537.png",
+      "description": "Hand-embroidered zardozi and sequins on rich silk velvet.",
+      "price": ""
+    },
+    {
+      "title": "Evening Soirée Gown",
+      "category": "party",
+      "image": "/images/party_wear_trends_blog_1777095380210.png",
+      "description": "Sophisticated silhouettes designed for unforgettable nights.",
+      "price": ""
+    },
+    {
+      "title": "Refined Silk Abaya",
+      "category": "modest",
+      "image": "/images/modern_abaya_blog_1777095102340.png",
+      "description": "Flowing contemporary abayas crafted from premium Mulberry silk.",
+      "price": ""
+    },
+    {
+      "title": "The Atelier Masterpiece",
+      "category": "bespoke",
+      "image": "/images/atelier_studio_blog_1777095239456.png",
+      "description": "Exclusive hand-finished bespoke creations tailored for you.",
+      "price": ""
+    },
+    {
+      "title": "Imperial Crimson Ensemble",
+      "category": "bridal",
+      "image": "/images/imperial-crimson-ensemble.jpg",
+      "description": "Timeless bridal craftsmanship with heritage gold thread work.",
+      "price": ""
+    },
+    {
+      "title": "Opulent Velvet Anarkali",
+      "category": "party",
+      "image": "/images/opulent-velvet-anarkali.jpg",
+      "description": "Luxe velvet finish paired with hand-embroidered borders.",
+      "price": ""
+    },
+    {
+      "title": "Chiffon Layered Niqab Set",
+      "category": "modest",
+      "image": "/images/chiffon-layered-niqab-set.webp",
+      "description": "Ultra-soft, breathable fabrics created for timeless elegance.",
+      "price": ""
+    },
+    {
+      "title": "Custom Bridal Fitting",
+      "category": "bespoke",
+      "image": "/images/atelier_studio_blog_1777095239456.png",
+      "description": "One-on-one personal consultation with designer Amiraa.",
+      "price": ""
+    }
+  ]
+}
